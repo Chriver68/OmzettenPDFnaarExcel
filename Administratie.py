@@ -6,36 +6,36 @@ from datetime import datetime
 rekening_file = ''
 
 def wegschrijven():
-    try:
-        wb = load_workbook(bestand)
-        ws = wb.active
-        ws.title = 'Facturen'
-        now = datetime.now()
-        schrijfmoment = now.strftime("%d-%m-%Y %H:%M:%S")
-        ws.append([str(factuurnummer[0]), factuurdatum_conv, float(subtotaal[0]), float(btw_bedrag[0])
-                      ,float(totaal[0]), opdrachtgever, rekening_file, schrijfmoment])
-        wb.save(bestand)
-        st.info(f'Gegevens zijn toegevoegd aan het excel overzicht {bestand}!')
-    except:
-        st.error('Er is iets fout gegaan! Was het bestand nog geopend? Sluit deze eerst en probeer het dan nog een keer!')
+    #try:
+    wb = load_workbook(bestand)
+    ws = wb.active
+    ws.title = 'Facturen'
+    now = datetime.now()
+    schrijfmoment = now.strftime("%d-%m-%Y %H:%M:%S")
+    ws.append([str(factuurnummer[0]), factuurdatum_conv, float(subtotaal[0]), float(btw_bedrag[0])
+                  ,float(totaal[0]), opdrachtgever, rekening_file, schrijfmoment])
+    wb.save(bestand)
+    st.info(f'Gegevens zijn toegevoegd aan het excel overzicht {bestand}!')
+    #except:
+        #st.error('Er is iets fout gegaan! Was het bestand nog geopend? Sluit deze eerst en probeer het dan nog een keer!')
 
 def controle():
-    try:
-        wb = load_workbook(bestand)
-        ws = wb.active
-        ws.title = 'Facturen'
-        bestaat_al = ''
-        for data in ws["G"]:
-            if data.value == rekening.name:
-                bestaat_al = 'Ja'
+    #try:
+    wb = load_workbook(bestand)
+    ws = wb.active
+    ws.title = 'Facturen'
+    bestaat_al = ''
+    for data in ws["G"]:
+        if data.value == rekening.name:
+            bestaat_al = 'Ja'
 
-        wb.close()
-        if bestaat_al != 'Ja':
-            wegschrijven()
-        else:
-            st.warning('Het bestand was al verwerkt in het Excel overzicht!')
-    except:
-        st.error('Er is iets fout gegaan! Was het bestand nog geopend? Sluit deze eerst en probeer het dan nog een keer!')
+    wb.close()
+    if bestaat_al != 'Ja':
+        wegschrijven()
+    else:
+        st.warning('Het bestand was al verwerkt in het Excel overzicht!')
+    #except:
+        #st.error('Er is iets fout gegaan! Was het bestand nog geopend? Sluit deze eerst en probeer het dan nog een keer!')
 
 
 st.header('Omzetten factuurinformatie naar Excel')
